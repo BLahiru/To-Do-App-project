@@ -13,6 +13,6 @@ const topicTitleSchema = new Schema(
   }
 );
 
-const Topic= mongoose.models.Topic || mongoose.model("Topic",topicTitleSchema);
+const Topic=  mongoose.model("Topic",topicTitleSchema);
 
 export default Topic;
