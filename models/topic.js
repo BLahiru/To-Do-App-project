@@ -1,18 +1,26 @@
 import { timeStamp } from "console";
 import mongoose,{Schema} from "mongoose";
-import { title } from "process";
 
-const topicTitleSchema = new Schema(
+//import { title } from "process";
+
+const topicSchema = new Schema(
   {
-    title: { type: String, required: true },
-    description: { type: String, required: true },
+    title:  {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
 
   },
   {
-    timeStamp:true,
+    timestamps:true,
   }
 );
 
-const Topic=  mongoose.model("Topic",topicTitleSchema);
+const Topic=  mongoose.models.Topic||mongoose.model("Topic",topicSchema);
 
 export default Topic;
+
