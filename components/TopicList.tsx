@@ -5,24 +5,52 @@ import Link from "next/link";
 import RemoveBtn from "@/components/RemoveBtn";
 import {HiPencilAlt} from 'react-icons/hi';
 
+interface Topic {
+  _id: string;
+  title: string;
+  description: string;
+  // Add other properties as needed
+}
 
-const Home: React.FC = () => {
+const getTopics = async()=>{
+  try {
+    const res =await fetch('http://localhost:3000/api/topics',{
+      cache:"no-store",
+    });
+
+    if(!res.ok){
+      throw new Error("feiled to fethch topic");
+
+    }
+    return res.json();
+  } catch (error) {
+    console.log("Error loading topics",error);
+
+  }
+};
+
+
+
+const  TopicList: React.FC = async() => {
+  const {topics}= await getTopics();
   return (
     <>
-    <div className="p-4  my-3 flex justify-between gap-5 items-start border  border-gray-500 items-start">
-      <div>
-        <h2 className="font-bold text-2xl">Topic Title</h2>
-        <div>Topic Description</div>
+    {topics.map((t:Topic)=>(
+      <div className="p-4  my-3 flex justify-between gap-5 items-start border  border-gray-500 items-start">
+        <div>
+          <h2 className="font-bold text-2xl">{t.title}</h2>
+          <div>{t.description}</div>
+        </div>
+        <div className="flex gap-2">
+          <RemoveBtn id = {t._id}/>
+          <Link href={`/editTopic/${t._id}`}> 
+          <HiPencilAlt size={24}/>
+          </Link>
+        </div>
       </div>
-      <div className="flex gap-2">
-        <RemoveBtn></RemoveBtn>
-        <Link href={'/editTopic/123'}> 
-        <HiPencilAlt size={24}/>
-        </Link>
-      </div>
-    </div>
+      ))}
     </>
   );
 };
 
-export default Home;
+export default TopicList;
