@@ -5,6 +5,15 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import EditTopicForm from "@/components/editTopicForm";
 
+
+interface EditTopicFormProps {
+  id: string;
+  title: string;
+  description: string;
+}
+
+
+
 const getTopicById = async (id) => {
   try {
     const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
@@ -21,20 +30,10 @@ const getTopicById = async (id) => {
   }
 };
 
-const editTopic: React.FC = async({params}) => {
-
-
+export default async function EditTopic({ params }) {
   const { id } = params;
   const { topic } = await getTopicById(id);
   const { title, description } = topic;
-  return (
-      <>
-      <EditTopicForm id={id} title={title} description={description}/>
-      
-      </>
-      
 
-  );
-};
-
-export default editTopic;
+  return <EditTopicForm id={id} title={title} description={description} />;
+}
