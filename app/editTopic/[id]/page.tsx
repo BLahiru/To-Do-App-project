@@ -1,7 +1,7 @@
 import { func } from "prop-types";
 import '@/app/globals.css';
 import Link from "next/link";
-import React, { useEffect, useState } from 'react';
+//import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import EditTopicForm from "@/components/editTopicForm";
 
@@ -14,7 +14,7 @@ interface EditTopicFormProps {
 
 
 
-const getTopicById = async (id) => {
+const getTopicById = async (id:any) => {
   try {
     const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
       cache: "no-store",
@@ -30,7 +30,7 @@ const getTopicById = async (id) => {
   }
 };
 
-export default async function EditTopic({ params }) {
+export default async function EditTopic({ params} :any) {
   const { id } = params;
   const { topic } = await getTopicById(id);
   const { title, description } = topic;
